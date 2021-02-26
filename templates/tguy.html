@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1, user-scalable=no" />
+    <title>TGuy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="assets/trash-icon.png">
+    <script type='text/javascript'>
+        var Module = {};
+        fetch('tguy.wasm')
+            .then(response => response.arrayBuffer())
+            .then(buffer => {
+                    Module.canvas = document.getElementById("canvas");
+                    /*Module.printErr = alert;*/
+                    Module.wasmBinary = buffer;
+                    Module.preRun = function () {
+                        console.log('Emscripten preRun: Downloading assets.');
+                        const a_dir = Module.FS_mkdir('/assets');
+                        Module.FS_createPreloadedFile(a_dir, 'font.ttf', 'assets/font.ttf', true, false);
+                        Module.FS_createPreloadedFile(a_dir, 'trash-icon.png', 'assets/trash-icon.png', true, false);
+                    }
+                    const script = document.createElement('script');
+                    script.src = "tguy.js";
+                    script.onload = function () {
+                        console.log("Emscripten boilerplate loaded.")
+                    }
+                    document.head.appendChild(script);
+                }
+            );
+    </script>
+    <style type="text/css">
+        body {
+            background: aqua;
+        }
+
+        .canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            border: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+<div contenteditable="true" id="touch_input"></div>
+<canvas class="canvas" id="canvas"></canvas>
+</body>
+
+</html>

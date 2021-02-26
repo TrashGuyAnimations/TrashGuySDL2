@@ -1,0 +1,9 @@
+[submodule "libtguy"]
+	path = libtguy
+	url = https://github.com/Wirtos/libtguy
+[submodule "vec"]
+	path = vec
+	url = https://github.com/Wirtos/vec
+[submodule "utf8c"]
+	path = utf8c
+	url = https://github.com/Wirtos/utf8c
